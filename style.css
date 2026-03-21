@@ -1,3 +1,7 @@
+:root {
+    --vignette-size: 0px;
+}
+
 body {
     font-family: 'Playpen Sans', sans-serif;
     background-color: #f0f0f0;
@@ -5,42 +9,19 @@ body {
     padding: 0;
 }
 
-#progress-bar {
-    position: fixed;
-    top: 10px;
-    width: 93%;
-    height: 20px;
-    border-radius: 20px;
-    margin: 10px;
-    background-color: #d69c9c;
+main {
+    height: 100vh;
+    background-image: url("bubbles.webp");
+    box-shadow: inset 0 0 var(--vignette-size) rgba(0, 0, 0, 0.9);
 }
 
-#progress {
-    display: none;
-    height: 100%;
-    border-radius: 20px;
-    background-color: #e53e3e;
+button {
+    font-family: 'Indie Flower', cursive;
+    font-weight: bold;
 }
 
-#progress.animated {
-    display: block;
-    animation: progress-animation 10s linear forwards;
-}
-
-@keyframes progress-animation {
-    0% { width: 0%; }
-    100% { width: 100%; }
-}
-
-#game-pb.fade-in {
-    animation: fade-in 0.7s ease-in-out;
-}
-
-@keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- LOADING SCREEN --------------------------------------------------*/
 #content{
     text-align: center;
     margin: 20px;
@@ -54,9 +35,47 @@ body {
 #content.fade-out {
     animation: fade-out .7s forwards;
 }
-@keyframes fade-out {
-    from { opacity: 1; }
-    to { opacity: 0; }
+
+#start-button {
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 18px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    padding: 5px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+#start-button:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 0 10px #eedf95, 0 0 30px #eedf95, 0 0 60px #eedf95;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- PROGRESS BAR --------------------------------------------------*/
+
+#progress-bar {
+    position: fixed;
+    top: 10px;
+    width: 93%;
+    height: 10px;
+    border-radius: 20px;
+    margin: 10px;
+    background-color: #d69c9c;
+}
+
+#progress {
+    display: none;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #ff9a9e, #e53e3e);
+    box-shadow: 0 0 10px rgba(229, 62, 62, 0.7);
+    transition: width 0.4s ease;
+}
+
+#game-pb.fade-in {
+    animation: fade-in 0.7s ease-in-out;
 }
 
 #progress-percent {
@@ -78,25 +97,201 @@ body {
     color: rgb(0, 0, 0);
 }
 
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- CLASSES --------------------------------------------------*/
+
 .hidden {
     display: none;
 }
 
-button {
-    font-family: 'Indie Flower', cursive;
-    font-weight: bold;
+.fade-in {
+    animation: fade-in 0.7s ease-in-out, pulse 1.5s 0.7s infinite ease-in-out;
 }
+
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- THOUGHT CONTAINER --------------------------------------------------*/
 
 #thought-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 91.5vh;
+    top: 80px;
 }
 
 .bubble {
     position: absolute;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border: 1px #929292 solid;
+    border-radius: 50%;
+    padding: 40px;
+    color: rgb(0, 0, 0);
+    animation: pulse 1.5s infinite ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px;
+    transform: scale(0.9–1.2 random);
+    transform: translateY(sin wave-ish);
+
+    button {
+        background-color: rgb(219, 218, 218);
+        color: rgb(0, 0, 0);
+        border: none;
+        padding: 6px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        :hover {
+            background-color: rgb(109, 109, 109);
+            cursor: pointer;
+        }
+    }
+
 }
 
 .bubble.fade-in {
-    animation: fade-in 0.7s ease-in-out;
+    animation: fade-in 0.7s ease-in-out, pulse 1.5s 0.7s infinite ease-in-out;
 }
+
+.bubble .fix-button {
+    display: block;
+    margin: 8px auto 0;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- REALIZATION CONTAINER --------------------------------------------------*/
+
+#realization-cont {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#realization-cont::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(225, 225, 225, 0.789);
+    animation: pulsing 1.5s infinite ease-in-out;
+    z-index: 0;
+}
+
+#content-r {
+    text-align: center;
+    margin: 20px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Indie Flower', cursive;
+    margin: 0;
+
+    p {
+        margin: 0;
+    }
+}
+
+#realization-cont {
+    z-index: 1000;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+#realization-text {
+    font-weight: bold;
+    margin: 0;
+    font-size: 20px;
+}
+
+#restart-button {
+    cursor: pointer;
+    margin: 4px;
+}
+
+#restart-button:hover {
+    opacity: 1;
+    animation: none;
+}
+
+#no-button {
+    cursor: pointer;
+    text-decoration: underline;
+    margin: 0;
+}
+
+#no-button:hover {
+    opacity: 1;
+    animation: none;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- KEYFRAMES --------------------------------------------------*/
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes pulsing {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1); /* Slightly larger */
+    opacity: 0.7; /* Slightly transparent */
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- FOOTER --------------------------------------------------*/
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    background-color: rgba(166, 204, 216, 0.8);
+    font-family: 'Indie Flower', cursive;
+
+    p {
+        margin: 0;
+        padding: 5px;
+        text-align: center;
+    }
+}
+
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- END OF FILE --------------------------------------------------*/

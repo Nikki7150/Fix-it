@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Fix It</title>
+        <title>Fix It.</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css" />
+        <link rel="icon" href="bubble-icon.png" type="image/x-icon">
 
         <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet" /> 
     </head>
     <body>
         <main id="main">
+            <!-- Game Progress Bar -->
             <div id="game-pb" style="display: none;">
                 <div id="progress-bar">
                     <div id="progress"></div>
@@ -18,14 +19,32 @@
                 <p id="progress-percent">0%</p>
                 <p id="progress-text">Fixing...</p>
             </div>
+
+            <!-- Landing page Content -->
             <div id="content">
-                <h1 id="title">Fix It</h1>
+                <h1 id="title">Fix It.</h1>
                 <p id="description">Fix it before it gets worse</p>
                 <button id="start-button">start thinking</button>
             </div>
 
+            <!-- Thought container -->
             <div id="thought-container" style="display: none;"></div>
+
+            <!-- Realization container -->
+            <div id="realization-cont" style="display: none;">
+                <div id="content-r">
+                    <p id="realization-text">it was never going to be perfect...</p>
+                    <button id="restart-button">try again</button>
+                    <p>or...</p>
+                    <p id="no-button">i want to finish this.</p>
+                </div>
+            </div>
+
         </main>
+
+        <footer>
+            <p>created with ❤︎⁠ by nishka kanchan</p>
+        </footer>
         <script src="app.js"></script>
     </body>
 </html>

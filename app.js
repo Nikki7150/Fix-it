@@ -7,43 +7,28 @@ const title = document.getElementById('title');
 const description = document.getElementById('description');
 const gamePB = document.getElementById('game-pb');
 
+// ----------------------------------------------------------------------------------------------------------------
+// START BUTTON
+// ----------------------------------------------------------------------------------------------------------------
 startButton.addEventListener('click', () => {
     content.classList.add('fade-out');
     content.addEventListener('animationend', () => {
         content.style.display = 'none';
     }, { once: true });
-
+    mainContent.style.backgroundImage = "none";
+    mainContent.style.backgroundColor = "rgba(204, 237, 248, 0.672)";
     gamePB.style.display = 'block';
     gamePB.classList.add('fade-in');
+    progress.style.display = 'block';
+    progress.style.width = '0%';
     thoughtContainer.style.display = 'block';
 
     createBubble();
-    
-    /*const interval = setInterval(() => {
-        if (width >= 100) {
-            clearInterval(interval);
-            progressBar.style.display = 'none';
-            mainContent.innerHTML = `
-                <h1 id="title">Great job!</h1>
-                <p id="description">You fixed it before it got worse!</p>
-            `;
-        } else {
-            width += 1;
-            progress.style.width = width + '%';
-        }
-    }, 50);*/
 });
 
-/*change percent as width of progress bar increases, and when it reaches 100%, show the main content with the title and description.*/
-
-/*const fixButton = document.querySelectorAll('.fix-button');
-fixButton.forEach((button) => {
-    button.addEventListener('click', () => {
-        // code to fix the issue and update the progress bar
-        progress.classList.add('animated');
-    });
-});
-*/
+// ----------------------------------------------------------------------------------------------------------------
+// BUBBLE CREATION
+// ----------------------------------------------------------------------------------------------------------------
 const bubbleTexts = [
     "that sounded weird",
     "why did I say that",
@@ -51,6 +36,22 @@ const bubbleTexts = [
     "fix it",
     "no that’s worse",
     "say it better"
+];
+
+const progressTexts = [
+    "Fixed!",
+    "getting there...", 
+    "almost there...",
+    "so close...",
+    "maybe one more..?"
+];
+
+const fixTexts = [
+    "fix it properly",
+    "try again",
+    "no, not like that",
+    "again", 
+    "bruh get it right"
 ];
 
 const thoughtContainer = document.getElementById('thought-container');
@@ -63,17 +64,20 @@ function createBubble() {
     bubbleDiv.style.display = 'block';
     bubbleDiv.classList.add('fade-in');
     
+    bubbleDiv.style.opacity = Math.random() * 0.5 + 0.5;
 
     // pick random text from list
-    const randomText = bubbleTexts[Math.floor(Math.random() * bubbleTexts.length)];
+    const randomBubbleText = bubbleTexts[Math.floor(Math.random() * bubbleTexts.length)];
     const text = document.createElement('p');
-    text.textContent = randomText;
+    text.textContent = randomBubbleText;
     bubbleDiv.appendChild(text);
+    bubbleDiv.style.zIndex = Math.floor(Math.random() * 100);
 
     // create a button
     const fixButton = document.createElement('button');
+    const randomFixText = fixTexts[Math.floor(Math.random() * fixTexts.length)];
     fixButton.classList.add('fix-button');
-    fixButton.textContent = 'Fix it';
+    fixButton.textContent = randomFixText;
     bubbleDiv.appendChild(fixButton);
 
     // position randomly
@@ -92,10 +96,106 @@ function createBubble() {
     fixButton.addEventListener('click', () => {
         bubbleDiv.remove();
         updateProgress();
+
+        if (progressWidth < 100) {
+            const bubblesCreate = Math.floor(Math.random() * 3) + 1; // create 1-5 more bubbles to fix
+            setTimeout(() => {
+                for (let i = 0; i < bubblesCreate; i++) {
+                    createBubble();
+                }
+            }, 200);
+        }
     });
+
+    // thoughts get meaner
+    if(progressWidth > 60) {
+        bubbleTexts.push(
+            "they're laughing at you",
+            "this is wrong",
+            "you’re overthinking again",
+            "not good enough",
+            "fix it properly",
+            "why can't you get it right" );
+    }
+
+    // bubbles start shaking and getting intense
+    if (progressWidth > 80) {
+        bubbleDiv.style.animation = "shake 0.5s infinite";
+    }
 }
+
+let progressWidth = 0;
+
+// ----------------------------------------------------------------------------------------------------------------
+// UPDATE PROGRESS
+// ----------------------------------------------------------------------------------------------------------------
 
 function updateProgress() {
-    // code to update the progress bar based on the number of issues fixed
+    progressWidth += Math.floor(Math.random() * 10) + 1;
+    progressWidth = Math.min(progressWidth, 100);
 
+    progress.style.width = progressWidth + '%';
+    // change vignette size based on progress
+    document.documentElement.style.setProperty('--vignette-size', (progressWidth * 0.8) + 'px');
+
+    document.getElementById('progress-percent').textContent = progressWidth + '%';
+    const randomProgressText = progressTexts[Math.floor(Math.random() * progressTexts.length)];
+    document.getElementById('progress-text').textContent = randomProgressText;  
+
+    if (progressWidth > 60) {
+        progress.style.boxShadow = "0 0 20px rgba(229, 62, 62, 1)";
+    }
+
+    if (progressWidth > 85) {
+        progress.style.boxShadow = "0 0 30px rgba(229, 62, 62, 1)";
+    }
+    if (progressWidth > 70) {
+        progress.style.background = "linear-gradient(90deg, #ff6a6a, #ff0000)";
+    }
+
+    if (progressWidth >= 96) {
+        progressWidth -= Math.floor(Math.random() * 80) + 50;
+        progressWidth = Math.max(0, progressWidth);
+        progress.style.width = progressWidth + '%';
+        document.getElementById('progress-percent').textContent = progressWidth + '%';
+        document.getElementById('progress-text').textContent = "uh oh...";  
+        // after a few seconds, show the realization container
+        setTimeout(() => {
+            showRealization();
+        }, 200);
+    }
 }
+
+// ----------------------------------------------------------------------------------------------------------------
+// REALIZATION CONTAINER
+// ----------------------------------------------------------------------------------------------------------------
+const realizationCont = document.getElementById('realization-cont');
+
+function showRealization() {
+    realizationCont.style.display = 'block';
+}
+
+const restartButton = document.getElementById('restart-button');
+const noButton = document.getElementById('no-button');
+
+restartButton.addEventListener('click', () => {
+    // reset everything
+    progressWidth = 0;
+    progress.style.width = '0%';
+    document.getElementById('progress-percent').textContent = '0%';
+    document.getElementById('progress-text').textContent = '';
+    realizationCont.style.display = 'none';
+    thoughtContainer.innerHTML = '';
+    // change vignette size based on progress
+    document.documentElement.style.setProperty('--vignette-size', 0 + 'px');
+    createBubble();
+});
+
+noButton.addEventListener('click', () => {
+    alert("Denial isn't just a river in Egypt...");
+    realizationCont.style.display = 'none';
+});
+
+// ----------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------END HERE-----------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------
