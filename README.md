@@ -18,3 +18,5 @@ I learned how powerful small UI/UX decisions can be in shaping user experience. 
 
 ## What's next for Fix It.
 I’d like to expand the experience by adding sound design, more nuanced visual changes over time, and possibly different “modes” that represent other mental patterns like procrastination or self-doubt. I'd also like to add a definite end to the experience—rather than it just clearing the bubbles to try again all over again, I want to add steps to make the user do actions so as to clear the bubbles gradually and end the experience with a page of quotes. 
+
+copy/pasted this structure from another hackathon submission piece. 
